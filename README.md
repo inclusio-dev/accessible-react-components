@@ -1,16 +1,29 @@
 # Accessible React Components
 This repo is a collection of components, which expect user input, that are accessible.
 The components are inserted inside a Storybook so that you can see and test their functioning.
-## Available Scripts
 
-In the project directory, you can run:
+### Installation
 
-`npm start`
+1. Clone the repo
+   ```sh
+   git clone https://github.com/accessible-developments/accessible-react-components
+   ```
+3. Install NPM packages
+   ```sh
+   npm install
+   ```
+4. Run Storybook 
+   ```sh
+   npm run storybook
+   ```
 
-`npm run build` 
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-`npm run storybook` 
+### Contact
 
-`npm run build-sstorybook` 
+Alessio Acella - @alessioacella - alessio.acella@omnes.cloud
+Diana Bernabei - @dianabernabei - hello@dianabernabei.com
 
-`npm run lint`
+Project Link: https://accessible-developments.github.io/accessible-react-components/
+
+<p align="right">(<a href="#top">back to top</a>)</p>
