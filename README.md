@@ -21,9 +21,9 @@ The components are inserted inside a Storybook so that you can see and test thei
 
 ### Contact
 
-Alessio Acella - [@alessioacella](https://twitter.com/alessioacella)  - alessio.acella@omnes.cloud
+Alessio Acella - [@alessioacella](https://twitter.com/alessioacella)  - alessioacella@gmail.com
 
-Diana Bernabei - [@dianabernabei](https://twitter.com/dianabernabei) - hello@dianabernabei.com
+Diana Bernabei - [@dianabernabei](https://twitter.com/dianabernabei) - bernabei.d@gmail.com
 
 <br>
 
