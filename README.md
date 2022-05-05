@@ -5,10 +5,12 @@ The components are inserted inside a Storybook so that you can see and test thei
 
 In the project directory, you can run:
 
-### `npm start`
-### `npm run build`
+`npm start`
 
-### `npm run storybook`
-### `npm run build-sstorybook`
+`npm run build` 
 
-### `npm run lint`
+`npm run storybook` 
+
+`npm run build-sstorybook` 
+
+`npm run lint`
