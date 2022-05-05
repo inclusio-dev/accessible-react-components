@@ -12,7 +12,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public",
+    "build-storybook": "build-storybook public",
     "lint": "eslint --fix --ext .js,.jsx ./src/ --ignore-pattern node_modules/"
   },
   "eslintConfig": {
