@@ -22,7 +22,9 @@ The components are inserted inside a Storybook so that you can see and test thei
 ### Contact
 
 Alessio Acella - @alessioacella - alessio.acella@omnes.cloud
+
 Diana Bernabei - @dianabernabei - hello@dianabernabei.com
+
 
 Project Link: https://accessible-developments.github.io/accessible-react-components/
 
