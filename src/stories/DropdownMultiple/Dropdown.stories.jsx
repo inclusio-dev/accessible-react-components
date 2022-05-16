@@ -1,16 +1,33 @@
 import React from 'react'
-import DropdownMultiple from './DropdownMultiple'
+import Dropdown from './Dropdown'
 
 export default {
-  title: 'DropdownMultiple',
-  component: DropdownMultiple,
+  title: 'Dropdown',
+  component: Dropdown,
   argTypes: {},
 }
 
-const Template = (args) => <DropdownMultiple {...args} />
+const Template = (args) => <Dropdown {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
+  label: 'Gruppo',
+  placeholder: 'Seleziona il Gruppo',
+  optionsList: [
+    'Matematica',
+    'Geografia',
+    'Educazione Civica',
+    'Storia',
+    'Filosofia',
+    'Informatica',
+    'Biologia',
+    'Fisica',
+  ],
+  multiple: false,
+}
+
+export const Multiple = Template.bind({})
+Multiple.args = {
   label: 'Gruppo',
   placeholder: 'Seleziona il Gruppo',
   optionsList: [

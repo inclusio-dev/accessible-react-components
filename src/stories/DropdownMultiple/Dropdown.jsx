@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import PropTypes from 'prop-types'
+import '../../index.css'
 
-const DropdownMultiple = ({ optionsList, placeholder }) => {
+const DropdownMultiple = ({ optionsList, placeholder, multiple }) => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState([])
   const [isFocused, setIsFocused] = useState(null)
@@ -18,6 +19,10 @@ const DropdownMultiple = ({ optionsList, placeholder }) => {
       document.removeEventListener('click', handleClickOutside, true)
     }
   }, [isFocused, optionsList])
+  
+  const stopPropagation = (e) => {
+    e.stopPropagation()
+  }
 
   const refreshSelectedOption = useCallback(() => {
     setSelectedOption((selectedOption) =>
@@ -28,20 +33,28 @@ const DropdownMultiple = ({ optionsList, placeholder }) => {
   const toggleOptions = () => {
     setIsOptionsOpen(!isOptionsOpen)
   }
+
   const deleteOption = (option) => {
     const index = selectedOption.indexOf(option)
     selectedOption.splice(index, 1)
     setSelectedOption(selectedOption)
     refreshSelectedOption()
+    
   }
+
   const setSelectedThenCloseDropdown = (option) => {
-    if (!selectedOption.includes(option)) {
+    if (!selectedOption.includes(option) && multiple){
       setSelectedOption([...selectedOption, option])
-      refreshSelectedOption()
-    } else {
-      deleteOption(option)
+    }else{
+       deleteOption(option)
+      if(selectedOption.length === 0){
+        setSelectedOption([...selectedOption, option])
+        setIsOptionsOpen(false)
+      }
     }
+    refreshSelectedOption()
   }
+
   const handleListKeyDown = (e) => {
     switch (e.key) {
       case 'Escape':
@@ -72,10 +85,6 @@ const DropdownMultiple = ({ optionsList, placeholder }) => {
     setIsFocused(index)
   }
 
-  const stopPropagation = (e) => {
-    e.stopPropagation()
-  }
-
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
       setIsOptionsOpen(false)
@@ -92,7 +101,7 @@ const DropdownMultiple = ({ optionsList, placeholder }) => {
         className="flex w-full items-center rounded border border-solid border-black bg-white px-4 py-2 font-sans text-black focus:bg-zinc-200"
       >
         <div className="flex w-5/6 flex-row flex-wrap gap-2">
-          {selectedOption.length > 0 ? (
+          {selectedOption.length > 0 ? multiple ? (
             selectedOption.map((option, index) => {
               return (
                 <div
@@ -102,7 +111,7 @@ const DropdownMultiple = ({ optionsList, placeholder }) => {
                 >
                   {option}
                   <svg
-                    onClick={() => deleteOption(option)}
+                    onClick={(e) => {stopPropagation(e);deleteOption(option)}}
                     className="flex items-center pl-2"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 320 512"
@@ -115,7 +124,10 @@ const DropdownMultiple = ({ optionsList, placeholder }) => {
                 </div>
               )
             })
-          ) : (
+          ) : 
+          <span className="flex w-5/6 flex-wrap gap-2.5">
+            {selectedOption} 
+           </span> : (
             <div className=" flex justify-start">{placeholder}</div>
           )}
         </div>
@@ -150,7 +162,7 @@ const DropdownMultiple = ({ optionsList, placeholder }) => {
           tabIndex="-1"
           onKeyDown={handleListKeyDown}
           aria-activedescendant={'button' + optionsList[isFocused]}
-          className="mt-2 flex flex-col rounded border border-zinc-200 bg-white drop-shadow-md"
+          className="mt-2 flex flex-col rounded border border-zinc-200 bg-white drop-shadow-md h-48 overflow-y-scroll"
         >
           {optionsList.sort().map((option, index) => (
             <div key={index} role="option">
@@ -196,9 +208,11 @@ export default DropdownMultiple
 DropdownMultiple.propTypes = {
   optionsList: PropTypes.array.isRequired,
   placeholder: PropTypes.string.isRequired,
+  multiple: PropTypes.bool.isRequired,
 }
 
 DropdownMultiple.defaultProps = {
   optionsList: [],
   placeholder: '',
+  multiple: true,
 }
