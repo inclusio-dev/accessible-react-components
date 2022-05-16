@@ -19,7 +19,7 @@ const DropdownMultiple = ({ optionsList, placeholder, multiple }) => {
       document.removeEventListener('click', handleClickOutside, true)
     }
   }, [isFocused, optionsList])
-  
+
   const stopPropagation = (e) => {
     e.stopPropagation()
   }
@@ -165,7 +165,7 @@ const DropdownMultiple = ({ optionsList, placeholder, multiple }) => {
           className="mt-2 flex flex-col rounded border border-zinc-200 bg-white drop-shadow-md h-48 overflow-y-scroll"
         >
           {optionsList.sort().map((option, index) => (
-            <div key={index} role="option">
+            <div key={index} role="option" aria-selected={Boolean(selectedOption.includes(option))}>
               <button
                 key={index}
                 id={'button' + option}
