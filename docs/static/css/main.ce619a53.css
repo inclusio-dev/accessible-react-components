@@ -422,6 +422,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -526,4 +529,4 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(228 228 231 / var(--tw-bg-opacity));
 }
 
-/*# sourceMappingURL=main.d3ccefb7.css.map*/
+/*# sourceMappingURL=main.ce619a53.css.map*/

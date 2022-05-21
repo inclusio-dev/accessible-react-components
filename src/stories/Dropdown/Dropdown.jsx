@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import '../../index.css'
 
-const DropdownMultiple = ({ optionsList, placeholder, multiple }) => {
+const DropdownMultiple = ({ optionsList, placeholder, multiple, label }) => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState([])
   const [isFocused, setIsFocused] = useState(null)
@@ -39,15 +39,14 @@ const DropdownMultiple = ({ optionsList, placeholder, multiple }) => {
     selectedOption.splice(index, 1)
     setSelectedOption(selectedOption)
     refreshSelectedOption()
-    
   }
 
   const setSelectedThenCloseDropdown = (option) => {
-    if (!selectedOption.includes(option) && multiple){
+    if (!selectedOption.includes(option) && multiple) {
       setSelectedOption([...selectedOption, option])
-    }else{
-       deleteOption(option)
-      if(selectedOption.length === 0){
+    } else {
+      deleteOption(option)
+      if (selectedOption.length === 0 && !multiple) {
         setSelectedOption([...selectedOption, option])
         setIsOptionsOpen(false)
       }
@@ -93,7 +92,11 @@ const DropdownMultiple = ({ optionsList, placeholder, multiple }) => {
 
   return (
     <div ref={ref}>
+      <label htmlFor="dropdown" className="mb-2">
+        {label}
+      </label>
       <button
+        id="dropdown"
         aria-expanded={isOptionsOpen}
         aria-haspopup="listbox"
         onClick={toggleOptions}
@@ -101,33 +104,39 @@ const DropdownMultiple = ({ optionsList, placeholder, multiple }) => {
         className="flex w-full items-center rounded border border-solid border-black bg-white px-4 py-2 font-sans text-black focus:bg-zinc-200"
       >
         <div className="flex w-5/6 flex-row flex-wrap gap-2">
-          {selectedOption.length > 0 ? multiple ? (
-            selectedOption.map((option, index) => {
-              return (
-                <div
-                  tabIndex="-1"
-                  key={index}
-                  className="flex flex-row items-center justify-center rounded border border-solid border-black px-2"
-                >
-                  {option}
-                  <svg
-                    onClick={(e) => {stopPropagation(e);deleteOption(option)}}
-                    className="flex items-center pl-2"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 320 512"
-                    width="15px"
-                    height="15px"
-                    aria-hidden={true}
+          {selectedOption.length > 0 ? (
+            multiple ? (
+              selectedOption.map((option, index) => {
+                return (
+                  <div
+                    tabIndex="-1"
+                    key={index}
+                    className="flex flex-row items-center justify-center rounded border border-solid border-black px-2"
                   >
-                    <path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z" />
-                  </svg>
-                </div>
-              )
-            })
-          ) : 
-          <span className="flex w-5/6 flex-wrap gap-2.5">
-            {selectedOption} 
-           </span> : (
+                    {option}
+                    <svg
+                      onClick={(e) => {
+                        stopPropagation(e)
+                        deleteOption(option)
+                      }}
+                      className="flex items-center pl-2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 320 512"
+                      width="15px"
+                      height="15px"
+                      aria-hidden={true}
+                    >
+                      <path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z" />
+                    </svg>
+                  </div>
+                )
+              })
+            ) : (
+              <span className="flex w-5/6 flex-wrap gap-2.5">
+                {selectedOption}
+              </span>
+            )
+          ) : (
             <div className=" flex justify-start">{placeholder}</div>
           )}
         </div>
@@ -162,10 +171,14 @@ const DropdownMultiple = ({ optionsList, placeholder, multiple }) => {
           tabIndex="-1"
           onKeyDown={handleListKeyDown}
           aria-activedescendant={'button' + optionsList[isFocused]}
-          className="mt-2 flex flex-col rounded border border-zinc-200 bg-white drop-shadow-md h-48 overflow-y-scroll"
+          className="mt-2 flex h-48 flex-col overflow-y-scroll rounded border border-zinc-200 bg-white drop-shadow-md"
         >
           {optionsList.sort().map((option, index) => (
-            <div key={index} role="option" aria-selected={Boolean(selectedOption.includes(option))}>
+            <div
+              key={index}
+              role="option"
+              aria-selected={Boolean(selectedOption.includes(option))}
+            >
               <button
                 key={index}
                 id={'button' + option}
@@ -209,10 +222,12 @@ DropdownMultiple.propTypes = {
   optionsList: PropTypes.array.isRequired,
   placeholder: PropTypes.string.isRequired,
   multiple: PropTypes.bool.isRequired,
+  label: PropTypes.string.isRequired,
 }
 
 DropdownMultiple.defaultProps = {
   optionsList: [],
   placeholder: '',
   multiple: true,
+  label: 'Seleziona',
 }
